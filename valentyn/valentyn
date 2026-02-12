@@ -1,0 +1,111 @@
+import { useState } from "react";
+import { Heart } from "lucide-react";
+
+const Index = () => {
+  const [answer, setAnswer] = useState<"yes" | "no" | null>(null);
+  const [noPos, setNoPos] = useState({ x: 0, y: 0 });
+
+  const handleNo = () => {
+    setNoPos({
+      x: Math.random() * 200 - 100,
+      y: Math.random() * 200 - 100,
+    });
+  };
+
+  return (
+    <div className="relative flex min-h-screen items-center justify-center bg-background overflow-hidden">
+      {/* Scanline overlay */}
+      <div className="pointer-events-none fixed inset-0 z-50 opacity-[0.03]"
+        style={{
+          background: "repeating-linear-gradient(0deg, transparent, transparent 2px, hsl(270 100% 60% / 0.1) 2px, hsl(270 100% 60% / 0.1) 4px)",
+        }}
+      />
+
+      {/* Grid background */}
+      <div className="pointer-events-none fixed inset-0 opacity-10"
+        style={{
+          backgroundImage: `
+            linear-gradient(hsl(270 100% 60% / 0.3) 1px, transparent 1px),
+            linear-gradient(90deg, hsl(270 100% 60% / 0.3) 1px, transparent 1px)
+          `,
+          backgroundSize: "60px 60px",
+        }}
+      />
+
+      {/* Glow orbs */}
+      <div className="pointer-events-none fixed top-1/4 left-1/4 w-96 h-96 rounded-full opacity-20 blur-[120px]"
+        style={{ background: "hsl(270 100% 60%)" }}
+      />
+      <div className="pointer-events-none fixed bottom-1/4 right-1/4 w-80 h-80 rounded-full opacity-15 blur-[100px]"
+        style={{ background: "hsl(320 100% 60%)" }}
+      />
+
+      <div className="relative z-10 text-center px-6 max-w-lg">
+        {answer === null ? (
+          <>
+            <div className="mb-6 flex justify-center text-6xl text-accent animate-[float_3s_ease-in-out_infinite]" style={{ fontFamily: "'Rajdhani', sans-serif" }}>
+              -`♡´-
+            </div>
+
+            <h1
+              className="mb-3 text-5xl md:text-6xl font-black tracking-wider text-foreground animate-[glitch_2s_ease-in-out_infinite]"
+              style={{ fontFamily: "'Orbitron', sans-serif" }}
+            >
+              VALENTÝN?
+            </h1>
+
+            <p className="mb-10 text-xl text-muted-foreground tracking-wide"
+              style={{ fontFamily: "'Rajdhani', sans-serif" }}
+            >
+              Budeš, <span className="text-accent font-bold">Jakube</span>, můj valentýn? 💜
+            </p>
+
+            <div className="flex items-center justify-center gap-6">
+              <button
+                onClick={() => setAnswer("yes")}
+                className="relative px-10 py-4 text-xl font-bold uppercase tracking-widest text-primary-foreground rounded-sm overflow-hidden transition-all duration-300 hover:scale-110 active:scale-95"
+                style={{
+                  fontFamily: "'Orbitron', sans-serif",
+                  background: "linear-gradient(135deg, hsl(270 100% 60%), hsl(320 100% 60%))",
+                  boxShadow: "0 0 30px hsl(270 100% 60% / 0.5), 0 0 60px hsl(320 100% 60% / 0.3), inset 0 0 20px hsl(270 100% 80% / 0.2)",
+                }}
+              >
+                ANO! 💜
+              </button>
+
+              <button
+                onClick={handleNo}
+                className="px-8 py-4 text-lg font-bold uppercase tracking-widest text-muted-foreground border border-border rounded-sm transition-all duration-200 hover:border-accent"
+                style={{
+                  fontFamily: "'Orbitron', sans-serif",
+                  transform: `translate(${noPos.x}px, ${noPos.y}px)`,
+                }}
+              >
+                Ne
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className="animate-[neon-pulse_2s_ease-in-out_infinite]">
+            <Heart
+              className="mx-auto mb-6 w-28 h-28 text-accent animate-[float_2s_ease-in-out_infinite]"
+              fill="hsl(320 100% 60%)"
+              strokeWidth={1}
+            />
+            <h1
+              className="mb-4 text-5xl md:text-7xl font-black tracking-wider text-foreground"
+              style={{
+                fontFamily: "'Orbitron', sans-serif",
+                textShadow: "0 0 20px hsl(270 100% 60%), 0 0 40px hsl(320 100% 60% / 0.5)",
+              }}
+            >
+              YIPPIEEEEE
+            </h1>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Index;
